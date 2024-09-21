@@ -1,26 +1,30 @@
 # netflixoss try out
 
-1. Go to [zerotodocker repo](https://github.com/Netflix-Skunkworks/zerotodocker) and choose an image
+1. Go to [zerotodocker repo](https://github.com/Netflix-Skunkworks/zerotodocker) and choose an image. This repo is using Eureka.
+
 2. From terminal pull image:
 
 	```
 	docker pull netflixoss/eureka
-	```
-	This did not work due to depricated manifest v1 being used. I had to copy dockerfile from repo above and build it locally.
-3. Build image manually:
-- Copy dockerfile content
-- Paste it in my local dockerfile
-- Build it: ` docker build -t . eureka-image --rm`
-- Changed `MAINTAINER` to `LABEL` and build again
-- Failed with at the wget command:
 
 	```
-ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref VDYE:LVUO:IAWH:IYEO:BQSU:USHJ:WLYF:FVC3:LZMF:YD3Z:RQ4Q:Y23Z::i06ta8aiuggzfbc9ztkoiz5w2: "/eureka-server-test.properties": not found
-	```
+	This did not work due to depricated manifest v1 being used. I had to copy dockerfile from repo above and build it locally.
+
+3. Build image manually:
+	- Copy dockerfile content
+	- Paste it in my local dockerfile
+	- Build it: 
+	
+		` docker build -t . eureka-image --rm`
+	- Changed `MAINTAINER` to `LABEL` and build again
+	- Failed at the `wget` command:
+
+		`ERROR: failed to solve: filed to compute cache key: failed to calculate checksum of ref VDYE:LVUO:IAWH:IYEO:BQSU:USHJ:WLYF:FVC3:LZMF:YD3Z:RQ4Q:Y23Z::i06ta8aiuggzfbc9ztkoiz5w2: "/eureka-server-test.properties": not found`
+
 4. Fix the wget command:
-- Ran the command by itself, no file was downloaded
-- Followed the link to double-check it exist, found it and updated the version just in case but wget still failed
-- Compared the dockerfile link to the link in the browser and found the wget link was using http while the source had https.
+	- Ran the wget line command by itself on the terminal, no file was downloaded
+	- Followed the link to double-check it exist, found it and updated the version just in case but `wget` still failed
+	- Compared the dockerfile `wget` link to the link in the browser and found the wget link was using http while the source had https.
 - Replaced http with https fixing the issue
 - Oh wait, no I still got the same error so I ran the line after wget which return an error: `Command 'jar' not found, but can be installed with:
 sudo apt install openjdk-17-jdk-headless  # version 17.0.12+7-1ubuntu2~24.04, or`
@@ -32,10 +36,12 @@ sudo apt install openjdk-17-jdk-headless  # version 17.0.12+7-1ubuntu2~24.04, or
 - Yeah, so that didn't fix the error either because when I decided to upgrade the war file version, I forgot to upgrade it everywhere
 6. Upgrade war file version everywhere
 - Created environment variables using ENV and used them accross the dockerfile:
+	
 	```
 	ENV EUREKA_VERSION=1.10.18
 	ENV SERVER=eureka-server
 	ENV WAR_FILE=$SERVER-$EUREKA_VERSION.war
+	
 	```
 - Then got another error: `"/eureka-server-test.properties": not found`
 - I forgot to copy all the files from the source zerotodocker repo.
@@ -46,9 +52,12 @@ sudo apt install openjdk-17-jdk-headless  # version 17.0.12+7-1ubuntu2~24.04, or
 
 	```
 	docker build . -t eureka
+
 	```
 8. Run the container:
+	
 	```
 	docker run -it --rm -p 8888:8080 eureka
+	
 	```
 

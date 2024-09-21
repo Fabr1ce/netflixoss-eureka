@@ -16,7 +16,7 @@ FROM netflixoss/tomcat:7.0.64
 
 LABEL maintainer="Netflix Open Source Development <talent@netflix.com>"
 
-ENV VERSION=1.10.18
+ENV VERSION=2.0.3
 ENV SERVER=eureka-server
 ENV WARFILE=$SERVER-$VERSION.war
 
