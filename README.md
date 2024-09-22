@@ -69,7 +69,7 @@ sudo apt install openjdk-17-jdk-headless  # version 17.0.12+7-1ubuntu2~24.04, or
 	- Run it:
 
 		```
-		docker run -it --rm -p 8080:8080 eureka
+		docker run -p 8080:8080 eureka
 	
 		```
 	- Connect to it:
@@ -115,11 +115,11 @@ sudo apt install openjdk-17-jdk-headless  # version 17.0.12+7-1ubuntu2~24.04, or
 
 10. Optimize
 
-	Changes made in step 7 introduced additional layers/build steps to the image which increased its size. In order to reduce the size, I re-combined those steps.
+	Changes made in step 7 introduced additional layers/build steps to the image which increased its size. In order to reduce the size, I re-combined those steps like this.
 
-	| Before | After  |
-	|--------|--------|
-	| Before | After  |
+	| Image Size Before   | Image Size After    |
+	|:-------------------:|:-------------------:|
+	|       633MB         |       641MB         |
 
 
 11. Build end-to-end infra with eureka server
