@@ -19,5 +19,5 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the Docker Image
       run: docker build . --file Dockerfile --tag eureka
-    - name: Run th Docker Image
-      run: docker run -p 8080:8080 eureka && curl localhost:8080
+    - name: Run the Docker Image
+      run: docker run -d --name eureka -it eureka && curl localost:8080 && docker stop eureka
