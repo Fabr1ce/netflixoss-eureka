@@ -20,4 +20,4 @@ jobs:
     - name: Build the Docker Image
       run: docker build . --file Dockerfile --tag eureka:$(date +%s)
     - name: Run th Docker Image
-      run: docker run eureka -p 8080:8080 && curl localhost:8080
+      run: docker run eureka:$(date +%s) -p 8080:8080 && curl localhost:8080
