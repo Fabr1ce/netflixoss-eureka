@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+# on:
+#   schedule:
+#   - cron: "0 2 * * 1-5"
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker Image
+      run: docker build . --file Dockerfile --tag eureka
+    - name: Run the Docker Image
+      run: docker run -d --name eureka -it eureka && docker stop eureka
