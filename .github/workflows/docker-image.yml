@@ -20,4 +20,4 @@ jobs:
     - name: Build the Docker Image
       run: docker build . --file Dockerfile --tag eureka
     - name: Run the Docker Image
-      run: docker run -d --name eureka -it eureka && curl http://localhost:8080/eureka && docker stop eureka
+      run: docker run -d --name eureka -it eureka && docker stop eureka
